@@ -1,3 +1,9 @@
+--[[ TODO 
+    Apply this to selection when selection is not none  
+    Auto export?
+    Animation Support
+]]--
+
 local dlg = Dialog{ title = "Terraria Tile Sheeter" }
 
 local sprite = app.activeSprite
@@ -40,6 +46,7 @@ dlg:button  {
     end
 }
 
+
 dlg:show()
 local data = dlg.data
 if data.ok then
@@ -50,6 +57,7 @@ if data.ok then
 
 
     --app.command.CanvasSize { ui = false, right = xData, bottom = yData } -- resizing canvas
+    
 
     local sprite = app.activeSprite
     local currentImage = app.activeImage
@@ -97,7 +105,9 @@ if data.ok then
         end
     end
 
+
     cel.image = image
+    app.command.SpriteSize { ui = false, scaleX = 2, scaleY = 2}
     app.refresh()
 
 end
