@@ -55,8 +55,6 @@ if data.ok then
 
     for y = 0, sprite.height do
 
-        local xOffset = 0
-
         local multiplier = 1
 
         local rest = 0
@@ -72,21 +70,6 @@ if data.ok then
                 multiplier = multiplier + 1
                 rest = rest + 1
             end
-
-            --[[
-            if not blank then
-                local pixel = currentImage:getPixel(x - xOffset, y)
-                if sliced < xData and x % 8 and x > 0 then
-                    pixel = 0
-                    sliced = sliced + 1
-                end
-
-
-                image:drawPixel(x, y, pixel)
-            end
-            ]]--
-
-
         end
     end
 
