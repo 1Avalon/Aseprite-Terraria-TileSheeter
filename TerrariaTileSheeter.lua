@@ -1,17 +1,26 @@
 local dlg = Dialog{ title = "Terraria Tile Sheeter" }
 
+local sprite = app.activeSprite
+
+local x = sprite.width / 8
+local y = sprite.height / 8
+
+if x % 1 ~= 0 or y % 1 ~= 0 then 
+    app.alert("Cant convert the sprite into a Tilesheet. Please check your Sprite size.")
+    return
+end
 
 dlg:number  {
     id =  "x",
     label = "Tile Width: ",
-    text = "2",
+    text = tostring(x),
     decimals = 0
 }
 
 dlg:number  {
     id =  "y",
     label = "Tile Height: ",
-    text = "2",
+    text = tostring(y),
     decimals = 0
 }
 
