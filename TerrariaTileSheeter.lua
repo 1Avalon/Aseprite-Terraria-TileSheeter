@@ -49,26 +49,41 @@ if data.ok then
     local cel = newSprite:newCel(app.activeLayer, app.activeFrame)
 
 
+    local multiplierY = 1
 
+    local restY = 0
 
     local image = cel.image:clone()
 
-    for y = 0, sprite.height do
+    for y = 0, sprite.height + yData do
 
-        local multiplier = 1
+        local multiplierX = 1
 
-        local rest = 0
+        local restX = 0
+
+        local drawVertical = false
+
+        if y == 8 * multiplierY + restY then
+            image:drawPixel(x, y, 0)
+            multiplierY = multiplierY + 1
+            restY = restY + 1
+            drawVertical = true
+        end
 
         for x = 0, sprite.width + xData do
 
-            print(x - rest)
-            local pixel = currentImage:getPixel(x - rest, y)
+
+            local pixel = currentImage:getPixel(x - restX, y - restY)
             image:drawPixel(x, y, pixel)
 
-            if x == 8 * multiplier + rest then
-                image:drawPixel(8 * multiplier + rest, y, 0)
-                multiplier = multiplier + 1
-                rest = rest + 1
+            if drawVertical then
+                image:drawPixel(x, y, 0)
+            end
+
+            if x == 8 * multiplierX + restX then
+                image:drawPixel(8 * multiplierX + restX, y, 0)
+                multiplierX = multiplierX + 1
+                restX = restX + 1
             end
         end
     end
