@@ -3,7 +3,7 @@ local dlg = Dialog{ title = "Terraria Tile Sheeter" }
 
 dlg:number  {
     id =  "x",
-    label = "Tile Widht: ",
+    label = "Tile Width: ",
     text = "2",
     decimals = 0
 }
@@ -36,7 +36,7 @@ local data = dlg.data
 if data.ok then
     local xData = tonumber(data.x) - 1
 
-    local yData = tonumber(data.y)
+    local yData = tonumber(data.y) - 1
 
 
 
@@ -50,26 +50,43 @@ if data.ok then
 
 
 
+
     local image = cel.image:clone()
+
     for y = 0, sprite.height do
 
         local xOffset = 0
 
-        local sliced = 0
-        for x = 0, sprite.width do
-            --print(y .." " .. x)
+        local multiplier = 1
 
-            if x % 8 == 0 and x > 0 and sliced < xData then  --TODO fix this mess 
-                xOffset = xOffset + 1
-            end
-            local pixel = currentImage:getPixel(x - xOffset, y)
-            if sliced < xData and x % 8 == 0 and x > 0 then
-                pixel = 0
-                sliced = sliced + 1
-            end
+        local rest = 0
+
+        for x = 0, sprite.width + xData do
+
+            print(x - rest)
+            local pixel = currentImage:getPixel(x - rest, y)
             image:drawPixel(x, y, pixel)
-            print("Drawing " .. pixel .. "at " .. x .. " " .. y)
-            print("Pixel taken from " .. x - xOffset )
+
+            if x == 8 * multiplier + rest then
+                image:drawPixel(8 * multiplier + rest, y, 0)
+                multiplier = multiplier + 1
+                rest = rest + 1
+            end
+
+            --[[
+            if not blank then
+                local pixel = currentImage:getPixel(x - xOffset, y)
+                if sliced < xData and x % 8 and x > 0 then
+                    pixel = 0
+                    sliced = sliced + 1
+                end
+
+
+                image:drawPixel(x, y, pixel)
+            end
+            ]]--
+
+
         end
     end
 
