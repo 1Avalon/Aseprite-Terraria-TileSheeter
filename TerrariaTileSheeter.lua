@@ -30,6 +30,13 @@ dlg:number  {
     decimals = 0
 }
 
+dlg:check {
+    id = "check",
+    label = "Automatically export sprite",
+    selected = true
+}
+
+
 dlg:button  {
     id = "ok",
     text = "OK",
@@ -45,6 +52,8 @@ dlg:button  {
         app.command.CanvasSize = { ui = false, right = xData, bottom = yData } 
     end
 }
+
+
 
 
 dlg:show()
@@ -63,6 +72,7 @@ if data.ok then
     local currentImage = app.activeImage
 
     local newSprite = Sprite(sprite.width + xData, sprite.height + yData)
+    newSprite.filename = sprite.filename
     local cel = newSprite:newCel(app.activeLayer, app.activeFrame)
 
 
@@ -108,6 +118,9 @@ if data.ok then
 
     cel.image = image
     app.command.SpriteSize { ui = false, scaleX = 2, scaleY = 2}
+    if data.check then
+        app.command.SaveFileCopyAs{}
+    end
     app.refresh()
 
 end
